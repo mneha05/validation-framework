@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.20)
+project(gpu_api_validation LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(OpenCL)
+if(OpenCL_FOUND)
+  add_executable(opencl_vector_add opencl_vector_add.cpp)
+  target_link_libraries(opencl_vector_add PRIVATE OpenCL::OpenCL)
+endif()
+
+find_package(OpenGL)
+find_package(glfw3)
+if(OpenGL_FOUND AND glfw3_FOUND)
+  add_executable(opengl_probe opengl_probe.cpp)
+  target_link_libraries(opengl_probe PRIVATE OpenGL::GL glfw)
+endif()
+
+find_package(Vulkan)
+if(Vulkan_FOUND)
+  add_executable(vulkan_probe vulkan_probe.cpp)
+  target_link_libraries(vulkan_probe PRIVATE Vulkan::Vulkan)
+endif()
